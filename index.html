@@ -6,7 +6,9 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <link href="stylesheet.css" rel="stylesheet" />
     <script type="text/javascript" src="script/script.js"></script>
 </head>
@@ -21,6 +23,8 @@
     Nombre de photos : <input id="nb_photos" type="number" name="nb_photos">
     <span class="ui-icon ui-icon-search"></span>
     <br/> <br/>
+    <label for="date">A partir de :</label><input type="date" id="date">
+    <br/> <br/>
     <input id="submit" type="button" value="Rechercher">
 </form>
 
@@ -31,15 +35,21 @@
 <div class="container">
 
     <ul class="tabs">
+        <div id="rien" style="display: none">Aucun résultat trouvé</div>
         <li class="tab-link courant" data-tab="tab-photo">Photo</li>
         <li class="tab-link" data-tab="tab-tableau">Tableau</li>
     </ul>
 
     <div id="tab-photo" class="tab-content courant">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </div>
     <div id="tab-tableau" class="tab-content">
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <table>
+            <thead>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
     </div>
 
 </div>
