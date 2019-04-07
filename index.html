@@ -4,9 +4,9 @@
 
     <title>Photos Flickr</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link href="stylesheet.css" rel="stylesheet" />
     <script type="text/javascript" src="script/script.js"></script>
 </head>
@@ -16,12 +16,10 @@
 
     <h1>Recherche de photos : Flickr</h1>
 
-<form>
+<form id="form">
     Commune : <input id="commune" type="text" name="commune"> <br/> <br/>
     Nombre de photos : <input id="nb_photos" type="number" name="nb_photos">
-    <span class="ui-icon ui-icon-search"></span>
-    <br/> <br/>
-    <input id="submit" type="button" value="Rechercher">
+    <input id="submit" type="button" value="Rechercher" class="ui-icon ui-icon-search" id="submit">
 </form>
 
 </div>
@@ -36,12 +34,14 @@
     </ul>
 
     <div id="tab-photo" class="tab-content courant">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </div>
     <div id="tab-tableau" class="tab-content">
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </div>
 
+</div>
+
+<div id="dialog" title="no_pic">
+    <p>Désolés, aucune photo disponible.</p>
 </div>
 
 
