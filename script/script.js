@@ -17,7 +17,6 @@ $(document).ready(function() {
 
     //$("#date").datepicker();
 
-
     //Gestion autocomplete
     let bdVilles;
 
@@ -77,7 +76,6 @@ $(document).ready(function() {
                         dataType : "text",
                         success : function (data) {
 
-
                             //formatage des données
                             let s = data.substring(14,data.length-1);
                             let parse = JSON.parse(s);
@@ -115,7 +113,20 @@ $(document).ready(function() {
                                                 //ajout aux dialogues
                                                 $("#" + index).append("<div style='display: none' id='text" + index + "'></div>");
                                                 let dialog = $("#text" + index);
-                                                dialog.text("Photographe : " + info.owner.realname + "\nTitre : " + info.title._content);
+                                                dialog.text("Photographe : " + info.owner.realname + "\n" +
+                                                    "\nTitre : " + info.title._content + "\n" +
+                                                    "\nNom d'utilisateur : " + info.owner.username + "\n" +
+                                                    "\nTitre : " + info.title._content + "\n" +
+                                                    "\nDate : " + info.dates.taken);
+
+                                                //Tentative google maps
+                                                const url_map = GMaps.staticMapURL({
+                                                    size: [610, 350],
+                                                    lat: info.location.latitude,
+                                                    lng: info.location.longitude
+                                                });
+                                                $('<img/>').attr('src', url_map).appendTo('#static_map');
+
 
                                                 //ajout à la table
                                                 table.row.add({
@@ -127,7 +138,8 @@ $(document).ready(function() {
                                             }).draw();//redessiner la table
                                             }
                                         });
-                                        $("#"+index).click(function () {//ouerture des dialogues souhaités
+                                        $("#"+index).click(function () {//ouverture des dialogues souhaités
+
                                             let dialog = $("#text" + index);
                                             dialog.dialog({ autoOpen: false });
                                             dialog.dialog('open');
