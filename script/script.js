@@ -45,7 +45,10 @@ $(document).ready(function() {
     let table = $("table").DataTable({
         "columns" : [
             {"data" : "Photo"},
-            {"data" : "Photographe"}
+            {"data" : "Titre"},
+            {"data" : "Nom d'utilisateur"},
+            {"data" : "Photographe"},
+            {"data" : "Date"}
         ]
     });
 
@@ -117,7 +120,10 @@ $(document).ready(function() {
                                                 //ajout à la table
                                                 table.row.add({
                                                     "Photo": "<img src='https://farm"+ photos[index].farm +".staticflickr.com/"+ photos[index].server +"/"+ photos[index].id +"_"+ photos[index].secret +".jpg' alt='Image non chargée'/>",
-                                                    "Photographe": info.owner.realname
+                                                    "Photographe": info.owner.realname,
+                                                    "Nom d'utilisateur": info.owner.username,
+                                                    "Titre" : info.title._content,
+                                                    "Date" : info.dates.taken
                                             }).draw();//redessiner la table
                                             }
                                         });
