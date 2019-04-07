@@ -33,15 +33,14 @@ $(document).ready(function() {
                 return woe_name.woe_name;
             });
             //console.log(parse.places.place[index].woe_name)
-            console.log(bdVilles);
             $("#commune").autocomplete({source : bdVilles})
         }
     });
 
 
 
-    //Gestion des appels de photos
 
+    //Initialisation de la table
 
     let table = $("table").DataTable({
         "columns" : [
@@ -50,58 +49,79 @@ $(document).ready(function() {
         ]
     });
 
+
+    //Gestion des appels de photos
+
     $("#submit").click(function () {
+        //requete pour obtenir l'id de la ville tappée
         $.ajax({
             url:  "https://api.flickr.com/services/rest/?method=flickr.places.find&format=json&api_key="+ api_key + "&query="+ $("#commune").val(),
             type: "POST",
             dataType: "text",
             success : function (data) {
+                //formatage des données
                 let s = data.substring(14,data.length-1);
                 let parse = JSON.parse(s);
-                if (parse.places.place.length===0){
+                if (parse.places.place.length===0){ //test de pas de résultats
                     $("#rien").dialog();
 
 {}                } else {
                     let lieu = parse.places.place[0].place_id;
                     $.ajax({
+                        //requete pour obtenir les images
                         url : "https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_key="+ api_key +"&place_id"+ lieu +"&tags="+ $("#commune").val()+"&min_taken_date="+$("#date").val(),
                         type : "POST",
                         dataType : "text",
                         success : function (data) {
+
+
+                            //formatage des données
                             let s = data.substring(14,data.length-1);
                             let parse = JSON.parse(s);
                             let photos = parse.photos.photo;
+
+
+                            //remise a zero de l'affichage
                             $("#tab-photo").empty();
                             table.clear();
-                            if (photos.length===0){
+                            if (photos.length===0){ //test de pas de résultats
                                 $("#rien").dialog();
                             } else {
-                                //$("#tab-photo").css({"display":"flex","flex-direction":"column"});
+
                                 $.each(photos, function (index) {
-                                    if (index<$("#nb_photos").val()){
+
+                                    if (index<$("#nb_photos").val()){//choix du nombre a afficher
                                         $("#tab-photo").append("<div id='"+ index +"'></div>");
                                         $("#"+index).append("<img src='https://farm"+ photos[index].farm +".staticflickr.com/"+ photos[index].server +"/"+ photos[index].id +"_"+ photos[index].secret +".jpg' alt='Image non chargée'/>");
                                         //$("tbody").append("<tr id='tr"+ index +"'><td><img src='https://farm"+ photos[index].farm +".staticflickr.com/"+ photos[index].server +"/"+ photos[index].id +"_"+ photos[index].secret +".jpg' alt='Image non chargée'/></td></tr>");
                                         $("#text"+index).css("display","none");
+
+
+                                        //requete pour les infos des photos
                                         $.ajax({
                                             url : "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&format=json&api_key="+ api_key + "&photo_id="+ photos[index].id +"&secret="+ photos[index].secret,
                                             type : "POST",
                                             dataType : "text",
                                             success : function (data) {
+
+                                                //formatage des données
                                                 let s = data.substring(14, data.length - 1);
                                                 let parse = JSON.parse(s);
                                                 let info = parse.photo;
+
+                                                //ajout aux dialogues
                                                 $("#" + index).append("<div style='display: none' id='text" + index + "'></div>");
                                                 let dialog = $("#text" + index);
                                                 dialog.text("Photographe : " + info.owner.realname + "\nTitre : " + info.title._content);
-                                                //$("#tr"+index).append("<td>"+info.owner.realname+"</td>");
+
+                                                //ajout à la table
                                                 table.row.add({
                                                     "Photo": "<img src='https://farm"+ photos[index].farm +".staticflickr.com/"+ photos[index].server +"/"+ photos[index].id +"_"+ photos[index].secret +".jpg' alt='Image non chargée'/>",
                                                     "Photographe": info.owner.realname
-                                            }).draw();
+                                            }).draw();//redessiner la table
                                             }
                                         });
-                                        $("#"+index).click(function () {
+                                        $("#"+index).click(function () {//ouerture des dialogues souhaités
                                             let dialog = $("#text" + index);
                                             dialog.dialog({ autoOpen: false });
                                             dialog.dialog('open');
