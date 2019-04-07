@@ -17,6 +17,7 @@ $(document).ready(function() {
 
     //$("#date").datepicker();
 
+
     //Gestion autocomplete
     let bdVilles;
 
